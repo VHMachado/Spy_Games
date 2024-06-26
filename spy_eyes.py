@@ -1,5 +1,5 @@
 from random import randint
-import os, sys
+import keyboard, os, sys
 
 
 def verify_os():
@@ -19,6 +19,12 @@ def get_random_number():
     return randint(1, 9)
 
 
+def check_keyboard_input():
+    pressed_key = keyboard.read_event()
+    if pressed_key.event_type == keyboard.KEY_DOWN:
+        return pressed_key
+
+
 p = 0
 X = []
 Y = []
@@ -31,7 +37,13 @@ for i in range(1, 10):
     X.append(n1)
     Y.append(n2)
 
-erase_screen()
+# erase_screen()
 
-print(X)
-print(Y)
+while True:
+    I = check_keyboard_input()
+    if I:
+        print(I)
+    break
+
+# print(X)
+# print(Y)
