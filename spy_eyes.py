@@ -15,6 +15,12 @@ def erase_screen():
     os.system(clearcmd)
 
 
+def display_grid(GRID, positions):
+    for cell in GRID:
+        print(cell, end=" ")
+    print("")
+
+
 def get_random_number():
     return randint(1, 9)
 
@@ -25,25 +31,25 @@ def check_keyboard_input():
         return pressed_key
 
 
-p = 0
-X = []
-Y = []
+GRID_SIZE = 12
+GRID = [(col, row) for row in range(GRID_SIZE) for col in range(GRID_SIZE)]
 
-for i in range(1, 10):
-    # print(i + 1)
-    n1 = get_random_number() + 3
-    n2 = get_random_number() + 3
+points = 0
+positions = []
 
-    X.append(n1)
-    Y.append(n2)
+# Choose positions for the numbers
+for i in range(9):
+    positions.append([get_random_number() + 3, get_random_number() + 3])
 
-# erase_screen()
+erase_screen()
+print(positions)
 
-while True:
-    I = check_keyboard_input()
-    if I:
-        print(I)
-    break
+# Choose a random number
+M = get_random_number()
+display_grid(GRID, positions)
 
-# print(X)
-# print(Y)
+# while True:
+#     I = check_keyboard_input()
+#     if I:
+#         print(I)
+#     break
