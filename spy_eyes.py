@@ -1,4 +1,5 @@
 from random import randint
+from turtle import pos
 import keyboard, os, sys
 
 
@@ -15,41 +16,56 @@ def erase_screen():
     os.system(clearcmd)
 
 
-def display_grid(GRID, positions):
-    for cell in GRID:
-        print(cell, end=" ")
-    print("")
-
-
-def get_random_number():
-    return randint(1, 9)
-
-
 def check_keyboard_input():
     pressed_key = keyboard.read_event()
     if pressed_key.event_type == keyboard.KEY_DOWN:
         return pressed_key
 
 
-GRID_SIZE = 12
-GRID = [(col, row) for row in range(GRID_SIZE) for col in range(GRID_SIZE)]
+# Initialize the variable for the positions of the numbers that are going to be displayed on the screen and sets it's values
+def get_random_positions(numbers_list_size):
+    positions = set()
+    while len(positions) < numbers_list_size:
+        row = randint(0, GRID_SIZE - 1)
+        col = randint(0, GRID_SIZE - 1)
+        positions.add((row, col))
+    return positions
 
-points = 0
-positions = []
+
+def create_grid():
+    return [[" " for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+
+
+def set_numbers_positions():
+    for number, position in zip(numbers, positions):
+        row, col = position
+        grid[row][col] = number
+
+
+def display_grid(grid):
+    for row in grid:
+        for cell in row:
+            print(cell, end=" ")
+        print()
+
+
+# Define the size of the Grid
+GRID_SIZE = 12
+
+# Calls the function that creates the Grid
+grid = create_grid()
+
+# Create the list with all the 9 numbers, from 1 to 9, that are going to be displayed on the screen
+numbers = list(range(1, 10))
 
 # Choose positions for the numbers
-for i in range(9):
-    positions.append([get_random_number() + 3, get_random_number() + 3])
+positions = get_random_positions(len(numbers))
+
+set_numbers_positions()
 
 erase_screen()
-print(positions)
 
-# Choose a random number
-M = get_random_number()
-display_grid(GRID, positions)
+# Display the grid on the screen
+display_grid(grid)
 
-# while True:
-#     I = check_keyboard_input()
-#     if I:
-#         print(I)
-#     break
+# I = check_keyboard_input()
